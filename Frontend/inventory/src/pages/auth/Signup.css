@@ -1,0 +1,157 @@
+/* ===== Background ===== */
+
+.signup-container {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+
+  background: linear-gradient(
+    135deg,
+    #fdf4ff,
+    #e0f2fe,
+    #eef2ff
+  );
+}
+
+/* ===== Card ===== */
+
+.signup-card {
+  max-width: 460px;
+  padding: 45px;
+  border-radius: 22px;
+
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(14px);
+
+  box-shadow: 0 25px 70px rgba(139, 92, 246, 0.25);
+  animation: slideFade 0.6s ease-in-out;
+}
+
+/* ===== Title ===== */
+
+.signup-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #6d28d9;
+  margin-bottom: 8px;
+}
+
+.signup-subtitle {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 30px;
+}
+
+/* ===== Error ===== */
+
+.signup-error {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+/* ===== Form ===== */
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ===== Input ===== */
+
+.input-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  background: white;
+  padding: 13px 16px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  transition: 0.3s ease;
+}
+
+.input-group:hover {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.input-group input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 14px;
+  background: transparent;
+}
+
+/* ===== Button ===== */
+
+.signup-button {
+  margin-top: 10px;
+  padding: 13px;
+  border-radius: 14px;
+  border: none;
+
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+
+  background: linear-gradient(
+    90deg,
+    #8b5cf6,
+    #6366f1
+  );
+
+  transition: 0.3s ease;
+}
+
+.signup-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+}
+
+.signup-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ===== Footer ===== */
+
+.signup-footer {
+  margin-top: 25px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.signup-footer a {
+  color: #8b5cf6;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* ===== Responsive ===== */
+
+@media (max-width: 480px) {
+  .signup-card {
+    padding: 28px;
+  }
+}
+
+/* ===== Animation ===== */
+
+@keyframes slideFade {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

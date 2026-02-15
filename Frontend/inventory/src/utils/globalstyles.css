@@ -1,0 +1,4 @@
+.mandatory:focus-within {
+  border: 2px solid #e93737;
+  box-shadow: 0 0 0 2px rgba(233, 55, 55, 0.15);
+}

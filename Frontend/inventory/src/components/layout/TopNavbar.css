@@ -1,0 +1,132 @@
+/* ===== Main Navbar ===== */
+
+.topnav {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  background: linear-gradient(
+    90deg,
+    #eef2ff,
+    #e0e7ff,
+    #f5f3ff
+  );
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(12px);
+}
+
+/* Inner container */
+.topnav-inner {
+  max-width: 1200px;
+  margin: auto;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+/* Logo */
+.topnav-logo {
+  font-size: 1.3rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-decoration: none;
+}
+
+/* Desktop Links */
+.topnav-links {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+/* Normal Link */
+.nav-link {
+  text-decoration: none;
+  color: #334155;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #6366f1;
+}
+
+/* Button */
+.nav-button {
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: 0.3s ease;
+}
+
+.nav-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(99, 102, 241, 0.3);
+}
+
+/* User Info */
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  color: #475569;
+}
+
+/* Mobile Toggle */
+.mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #334155;
+}
+
+/* Mobile Dropdown */
+.mobile-menu {
+  display: flex;
+  flex-direction: column;
+  padding: 15px 20px;
+  gap: 15px;
+  background: #ffffff;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.mobile-menu a,
+.mobile-menu button {
+  text-decoration: none;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 0.95rem;
+  cursor: pointer;
+  color: #334155;
+}
+
+.mobile-user {
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .topnav-links {
+    display: none;
+  }
+
+  .mobile-toggle {
+    display: block;
+  }
+}

@@ -1,0 +1,8 @@
+/* Make resize handle visible */
+.ag-header-cell-resize {
+  background-color: rgba(99, 102, 241, 0.4); /* match your purple */
+}
+
+.ag-header-cell:hover .ag-header-cell-resize {
+  background-color: #6366f1;
+}
