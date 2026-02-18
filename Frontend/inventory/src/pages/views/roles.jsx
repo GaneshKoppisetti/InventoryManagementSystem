@@ -8,29 +8,44 @@ import { showToast } from "../../utils/toaster/Toaster";
 import api from "../../services/api";
 
 
-const Products = () => {
-  const [products, setProducts] = useState([]);
+const Roles = () => {
+  const [roles, setRoles] = useState([]);
   const columnDefs = [
     {
-      headerName: "Product Name",
-      field: "productname",
-    },
-    {
-      headerName:"SKU",
-      field:"sku"
+      headerName: "Role Name",
+      field: "rolename",
     },
     {
       headerName: "Description",
       field: "description",
     },
     {
-      headerName: "Price",
-      field: "price",
-      valueFormatter: (params) => `$${params.value.toFixed(2)}`,
-    },
-    {
-      headerName: "Quantity",
-      field: "quantity",
+      headerName: "Access Rights",
+      field: "permissions",
+      autoHeight: true,
+      minWidth: 250,
+      wrapText: true,
+      cellRenderer: (params) => {
+        const permissions = params.data.permissions;
+        const shortPerm = [{ Read: "R" }, { Write: "W" }, { Update: "U" }, { Delete: "D" }]
+
+        return (
+          <div className="permission-wrapper">
+            {Object.entries(permissions).map(([screen, actions]) =>
+              actions.length > 0 ? (
+                <div key={screen} className="permission-group">
+                  <span className="screen-name">{screen}</span>
+                  {actions.map((action, index) => (
+                    <span key={index} className={`permission-tag permission-${action.toLowerCase()}`} title={`${action}`}>
+                      {shortPerm.find(p => p[action])?.[action] || action}
+                    </span>
+                  ))}
+                </div>
+              ) : null
+            )}
+          </div>
+        );
+      },
     },
     {
       headerName: "Created At",
@@ -41,18 +56,19 @@ const Products = () => {
       headerName: "Updated At",
       field: "updatedAt",
       valueGetter: (params) => format(new Date(params.data.updatedAt), "dd-MM-yyyy hh:mm a"),
+
     },
     {
       headerName: "Status",
       field: "isActive",
       cellRenderer: (params) => (
-        <div style={{ color: params.data.isActive ? "green" : "#f53a3a", fontWeight: "bold" }}>
+        <div style={{ color: params.data.isActive ? "green" : "red", fontWeight: "bold" }}>
           <span>
-            {params.data.isActive ? <CircleCheckIcon size={18}/> : <CircleX size={18}/>}
+            {params.data.isActive ? <CircleCheckIcon size={18} /> : <CircleX size={18} />}
           </span>
-          <span className="status-icon-text">{params.data.isActive ? "Active" : "In-Active"}
+          <span className="status-icon-text">{params.data.isActive ? "Active" : "Inactive"}
           </span>
-          </div>
+        </div>
       ),
     },
     {
@@ -91,40 +107,39 @@ const Products = () => {
 
   useEffect(() => {
     showLoader();
-    // Fetch products data
     const fetchData = async () => {
       try {
-        const response = await api.get("/products/getProducts");
-        console.log("Products data:", response.data);
-        setProducts(response.data);
+        const response = await api.get("/roles/getRoles");
+        console.log("Roles data:", response.data);
+        setRoles(response.data);
       } catch (error) {
-        console.error("Error fetching products data:", error);
-         const errorMessage = error.response?.data?.message || "Something went wrong. Please try again.";
+        console.error("Error fetching roles data:", error);
+        const errorMessage = error.response?.data?.message || "Something went wrong. Please try again.";
         showToast(errorMessage, "error");
 
-      } finally { 
+      } finally {
         hideLoader();
       }
     };
     fetchData();
   }, []);
-   const handleAdd = () => {
-    navigate("/product-form");
+  const handleAdd = () => {
+    navigate("/role-form");
   };
   const handleEdit = (data) => {
-    navigate(`/product-form/${data._id}`);
+    navigate(`/role-form/${data._id}`);
   };
 
   const handleDelete = async (id) => {  
-    if (window.confirm("Are you sure you want to delete this product?")) {
+    if (window.confirm("Are you sure you want to delete this role?")) {
       try {
         showLoader();
-        await api.delete(`/products/deleteProduct/${id}`);
-        showToast("Product deleted successfully!", "success");
-        const updatedProducts = products.filter(product => product._id !== id);
-        setProducts(updatedProducts);
+        await api.delete(`/roles/deleteRole/${id}`);
+        showToast("Role deleted successfully!", "success");
+        const updatedRoles = roles.filter(role => role._id !== id);
+        setRoles(updatedRoles);
       } catch (error) {
-        console.error("Error deleting product:", error);
+        console.error("Error deleting role:", error);
         const errorMessage = error.response?.data?.message || "Something went wrong. Please try again.";
         showToast(errorMessage, "error");
       } finally {
@@ -135,14 +150,14 @@ const Products = () => {
 
   return (
     <div>
-      <h1 className="page-title">Products</h1>
+      <h1 className="page-title">Roles</h1>
       <DataTable
-        rowData={products}
+        rowData={roles}
         columnDefs={columnDefs}
-        onAdd={handleAdd}
+        onAdd={() => handleAdd()}
       />
     </div>
   );
 };
 
-export default Products;
+export default Roles;

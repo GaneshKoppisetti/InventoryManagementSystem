@@ -9,7 +9,8 @@ const validatePassword = (password) => {
 const validate = (data) => {
     let valid = { isValid: true, message: "" };
     for (let field of data) {
-        if (field.value.trim() === "") {
+        let isValid=field.type === "array" ? field.value.length > 0 : field.value.toString().trim() !== "";
+        if (!isValid && field.required) {
             valid.isValid = false;
             valid.message = `${field.name} cannot be blank`;
             const inputElement = document.getElementById(field.id);
@@ -19,7 +20,7 @@ const validate = (data) => {
                 behavior: "smooth",
                 block: "center"
             });
-            const parent = inputElement.closest(".input-group");
+            const parent = inputElement.closest(".input-group") || inputElement
             parent?.classList.add("mandatory");
             return valid;
         }
@@ -33,7 +34,7 @@ const validate = (data) => {
                 behavior: "smooth",
                 block: "center"
             });
-            const parent = inputElement.closest(".input-group");
+            const parent = inputElement.closest(".input-group") || inputElement
             parent?.classList.add("mandatory");
             return valid;
         }
@@ -47,7 +48,7 @@ const validate = (data) => {
                 behavior: "smooth",
                 block: "center"
             });
-            const parent = inputElement.closest(".input-group");
+            const parent = inputElement.closest(".input-group") || inputElement;
             parent?.classList.add("mandatory");
             return valid;
         }

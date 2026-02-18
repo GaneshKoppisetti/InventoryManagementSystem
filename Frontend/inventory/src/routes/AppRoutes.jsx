@@ -7,8 +7,14 @@ const Login = lazy(() => import("../pages/auth/Login"));
 const Signup = lazy(() => import("../pages/auth/Signup"));
 const RootLayout = lazy(() => new Promise((resolve) => setTimeout(() => resolve(import("../components/layout/Rootlayout")), 2000)));
 const MainLayout = lazy(() => import("../components/layout/Mainlayout"));
+// Views
+const Roles = lazy(() => import("../pages/views/roles"));
 const Users = lazy(() => import("../pages/views/users"));
 const Products = lazy(() => import("../pages/views/products"));
+//Forms
+const RoleForm = lazy(() => import("../pages/forms/roleForm"));
+const UserForm = lazy(() => import("../pages/forms/userForm"));
+const ProductForm = lazy(() => import("../pages/forms/productForm"));
 
 const ProtectedRoute = ({ children }) => {
   const { token } = localStorage;
@@ -37,8 +43,14 @@ const AppRoutes = () => {
             }
           >
             <Route index element={<Dashboard />} />
+            {/* Views */}
+            <Route path="/roles" element={<Roles />} />
             <Route path="/users" element={<Users />} />
             <Route path="/products" element={<Products />} />
+            {/* Forms */}
+            <Route path="/role-form/:id?" element={<RoleForm />} />
+            <Route path="/user-form/:id?" element={<UserForm />} />
+            <Route path="/product-form/:id?" element={<ProductForm />} />
           </Route>
 
         </Route>

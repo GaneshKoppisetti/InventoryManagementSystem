@@ -1,21 +1,13 @@
 import "./Sidebar.css";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import {
-  LayoutDashboard,
-  Users,
-  Package,
-  LogOut,
-  ChevronLeft,
-  ChevronRight
-} from "lucide-react";
+import {LayoutDashboard,Users,Package,ChevronLeft,ChevronRight,Settings} from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const { logout } = useAuth();
   const navigate = useNavigate();
 
   const menuItems = [
@@ -23,6 +15,11 @@ const Sidebar = () => {
       name: "Dashboard",
       icon: <LayoutDashboard size={20} />,
       path: "/"
+    },
+    {
+      name: "Roles",
+      icon: <Settings size={20} />,
+      path: "/roles"
     },
     {
       name: "Users",
@@ -35,10 +32,6 @@ const Sidebar = () => {
       path: "/products"
     }
   ];
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
 
   return (
     <div className={`sidebar-content ${isOpen ? "expanded" : "collapsed"}`}>
@@ -70,12 +63,6 @@ const Sidebar = () => {
           </NavLink>
         ))}
       </nav>
-
-      {/* Logout */}
-      <button className="logout-btn" onClick={() => handleLogout()}>
-        <LogOut size={20} />
-        {isOpen && <span>Logout</span>}
-      </button>
     </div>
   );
 };

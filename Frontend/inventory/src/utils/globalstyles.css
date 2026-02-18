@@ -2,3 +2,271 @@
   border: 2px solid #e93737;
   box-shadow: 0 0 0 2px rgba(233, 55, 55, 0.15);
 }
+.page-title {
+  font-weight: 600;
+  background:linear-gradient(90deg, #b1b3f3, #c1abf5);
+  padding: 10px;
+  color: #1d2531;
+  animation: fadeIn 0.5s ease-in-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+/* Common Form Styles */
+.modern-wrapper {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 35px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.07);
+}
+
+.modern-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  color: #1e293b;
+}
+
+.modern-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* Floating Label */
+/* Floating Input */
+
+.floating-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.floating-group input,
+.floating-group textarea {
+  width: 100%;
+  padding: 16px 12px 6px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  background: white;
+}
+
+.floating-group label {
+  position: absolute;
+  top: 14px;
+  left: 12px;
+  color: #64748b;
+  font-size: 14px;
+  font-weight: bold;
+  pointer-events: none;
+  transition: 0.2s ease all;
+  background: white;
+  padding: 0 4px;
+}
+
+/* When focused */
+.floating-group input:focus + label,
+.floating-group textarea:focus + label {
+  top: -8px;
+  font-size: 12px;
+  color: #6366f1;
+}
+
+/* When value exists */
+.floating-group input:not(:placeholder-shown) + label,
+.floating-group textarea:not(:placeholder-shown) + label {
+  top: -8px;
+  font-size: 12px;
+  color: #6366f1;
+}
+.mandatory-hastric {
+  color: #e93737;
+  font-weight: bold;
+}
+
+/* Permission Section */
+.permission-section h4 {
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.permission-grid {
+  display: grid;
+  grid-template-columns: 2fr repeat(4, 1fr);
+  gap: 10px;
+  align-items: center;
+}
+
+.grid-header {
+  font-weight: 600;
+  font-size: 13px;
+  color: #475569;
+}
+
+.grid-screen {
+  font-weight: 500;
+}
+.permission-grid input {
+  width: 16px;
+  height: 16px;
+  accent-color: #6366f1;
+}
+
+/* Toggle */
+.status-row {
+  display: flex;
+  align-items: center;
+}
+
+.modern-switch {
+  position: relative;
+  width: 46px;
+  height: 24px;
+  margin-left:30px;
+}
+
+.modern-switch input {
+  display: none;
+}
+
+.modern-switch .slider {
+  position: absolute;
+  background: #cbd5e1;
+  border-radius: 24px;
+  inset: 0;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.modern-switch .slider:before {
+  content: "";
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.modern-switch input:checked + .slider {
+  background: #6366f1;
+}
+
+.modern-switch input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+/* Buttons */
+.modern-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn-gradient {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn-light {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  background: #e2e8f0;
+  cursor: pointer;
+}
+
+.btn-gradient:hover {
+  opacity: 0.9;
+}
+
+.btn-light:hover {
+  background: #cbd5e1;
+}
+
+/* Permissions in Grid css */
+.permission-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.permission-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.screen-name {
+  font-weight: 600;
+  font-size: 12px;
+  color: #334155;
+  margin-right: 4px;
+  min-width: 50px;
+}
+
+.permission-tag {
+  color: black;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 500;
+  text-align: center;
+  padding-bottom: 5px;
+  width:30px;
+  height: 30px;
+}
+/* READ */
+.permission-read {
+  background: #76a7f5;
+}
+
+/* WRITE */
+.permission-write {
+  background: #62f196;
+}
+
+/* UPDATE */
+.permission-update {
+  background: #f1b347;
+}
+
+/* DELETE */
+.permission-delete {
+  background: #f37272;
+}
+
+.permission-tag:hover {
+  transform: scale(1.08);
+  opacity: 0.9;
+}
+
+/* Multi Select */
+.css-113d811-MuiFormLabel-root-MuiInputLabel-root
+{
+  color: #4f46e5 !important;
+  font-weight: bold !important;
+  font-size: 14px;
+}
+.css-19qnlrw-MuiFormLabel-root-MuiInputLabel-root{
+  color: #64748b !important;
+  font-weight: bold !important;
+  font-size: 14px !important;
+
+}
+
+.css-1ljffdk-MuiFormLabel-asterisk {
+  color: #e93737;
+  font-weight: bold;
+}

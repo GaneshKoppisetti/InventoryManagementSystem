@@ -11,7 +11,10 @@ const createUser = async (req, res) => {
       const defaultRole = await Role.findOne({ name: "staff" }).select('_id');
       role = defaultRole?._id;
     }
-
+    if(await User.findOne({ email })) {
+      return res.status(400).json({ error: 'Email already exists' });
+    }
+  
     let saltedPWD = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, saltedPWD);
     const newUser = new User({ username, email, password: hashedPassword, role, isActive });
@@ -55,13 +58,27 @@ const updateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const deletedUser = await User.findByIdAndUpdate(id, { isActive: false });
+    const deletedUser = await User.findByIdAndDelete(id);
     if (!deletedUser) {
       return res.status(404).json({ error: 'User not found' });
     }
     res.status(204).send();
   } catch (error) {
     console.error('Error deleting user:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+const getUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id).populate('role');  
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    console.error('Error fetching user:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
@@ -87,7 +104,7 @@ const loginUser = async (req, res) => {
 
     // 🔐 Generate JWT
     const token = jwt.sign(
-      { id: user._id, role: user.role?.name },
+      { id: user._id, role: user.role?.rolename },
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN }
     );
@@ -99,7 +116,7 @@ const loginUser = async (req, res) => {
         id: user._id,
         username: user.username,
         email: user.email,
-        role: user.role?.name
+        role: user.role?.rolename
       }
     });
 
@@ -115,5 +132,6 @@ module.exports = {
   getUsers,
   updateUser,
   deleteUser,
+  getUserById,
   loginUser 
 }

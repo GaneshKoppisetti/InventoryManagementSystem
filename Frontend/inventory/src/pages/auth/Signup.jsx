@@ -27,15 +27,14 @@ const Signup = () => {
     e.preventDefault();
     showLoader();
     let validationData = [
-      { name: "Full Name", value: formData.username, type: "text", id: "username" },
-      { name: "Email", value: formData.email, type: "email", id: "email" },
-      { name: "Password", value: formData.password, type: "password", id: "password" },
-      { name: "Confirm Password", value: formData.confirmPassword, type: "password", id: "confirmPassword" }
+      { name: "Full Name", value: formData.username, required: true, type: "text", id: "username" },
+      { name: "Email", value: formData.email, required: true, type: "email", id: "email" },
+      { name: "Password", value: formData.password, required: true, type: "password", id: "password" },
+      { name: "Confirm Password", value: formData.confirmPassword, required: true, type: "password", id: "confirmPassword" }
     ];
     try {
       let validResponse = validate(validationData);
       if (!validResponse.isValid) {
-        hideLoader();
         showToast(validResponse.message, "error");
         return;
       }
@@ -59,7 +58,7 @@ const Signup = () => {
       <div
         className="signup-card"
       >
-        <h2 className="signup-title">Create Account 🚀</h2>
+        <h2 className="signup-title">Create Account</h2>
         <p className="signup-subtitle">
           Join InventoryMS to manage your products
         </p>

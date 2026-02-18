@@ -29,14 +29,44 @@
 }
 
 /* Logo */
+/* Top Navbar Logo Container */
 .topnav-logo {
-  font-size: 1.3rem;
-  font-weight: 700;
-  background: linear-gradient(90deg, #6366f1, #8b5cf6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 12px;
   text-decoration: none;
+  padding: 6px 10px;
 }
+
+/* Logo Image */
+.ims-logo-img {
+  width: 200px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(99, 102, 241, 0.25);
+  transition: transform 0.3s ease;
+}
+
+/* Logo Hover Animation */
+.topnav-logo:hover .ims-logo-img {
+  transform: scale(1.05);
+}
+
+/* Text Styling */
+.logo-text {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #4f46e5;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Highlight MS */
+.logo-text span {
+  color: #6366f1;
+}
+
 
 /* Desktop Links */
 .topnav-links {
@@ -129,4 +159,21 @@
   .mobile-toggle {
     display: block;
   }
+}
+/* Logout */
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-weight: 500;
+  color: #dc2626;
+  transition: 0.3s ease;
+}
+
+.logout-btn:hover {
+  background: rgba(220, 38, 38, 0.1);
 }

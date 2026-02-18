@@ -1,8 +1,182 @@
-/* Make resize handle visible */
+/* ===== GRID WRAPPER ===== */
+.view-container{
+  display: flex;
+  flex-direction: column;
+}
+.custom-grid-wrapper {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  background: white;
+  margin:5px;
+  border:#aeaff5 1px solid;
+}
+
+/* ===== HEADER STYLE ===== */
+
+.ag-theme-alpine .ag-header {
+  background: linear-gradient(90deg, #c7c9f7, #d7cbf5);
+  border-bottom: none;
+}
+
+.ag-theme-alpine .ag-header-cell {
+  color: rgb(50, 46, 68);
+  font-weight: bold;
+  font-size: 14px;
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.ag-theme-alpine .ag-header-cell:last-child {
+  border-right: none;
+}
+
+/* Floating filter input */
+.ag-theme-alpine .ag-floating-filter-input {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  border-radius: 6px;
+  padding: 4px 8px;
+  color: white;
+}
+
+.ag-theme-alpine .ag-floating-filter-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ===== ROW STYLE ===== */
+
+.ag-theme-alpine .ag-row {
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.ag-theme-alpine .ag-row:hover {
+  background: #f8fafc;
+}
+
+.ag-theme-alpine .ag-cell {
+  font-size: 14px;
+}
+
+/* ===== RESIZE HANDLE ===== */
+
 .ag-header-cell-resize {
-  background-color: rgba(99, 102, 241, 0.4); /* match your purple */
+  width: 6px !important;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: col-resize;
 }
 
 .ag-header-cell:hover .ag-header-cell-resize {
-  background-color: #6366f1;
+  background: white;
+}
+
+/* ===== PAGINATION ===== */
+
+.ag-theme-alpine .ag-paging-panel {
+  border-top: none;
+  background: #fafafa;
+  font-weight: 500;
+}
+
+/* ===== ACTION BUTTONS ===== */
+
+.edit-btn {
+  border: none;
+  background: #eef2ff;
+  color: #6366f1;
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.edit-btn:hover {
+  background: #6366f1;
+  color: white;
+}
+
+.delete-btn {
+  border: none;
+  background: #fee2e2;
+  color: #dc2626;
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
+  color: white;
+}
+
+.ag-filter-select {
+  display: none;
+}
+.status-icon-text,.new-icon-text{
+  position: absolute;
+  top: -4px;
+  left: 40px;
+}
+/* Custom styles for the toolbar and search input */
+.global-search {
+  padding: 8px 12px;
+  width: 250px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  outline: none;
+  font-size: 14px;
+  margin:10px 10px 5px 5px;
+}
+
+.global-search:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+/* Add button styles */
+/* Container */
+.add-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+/* Button */
+.add-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  background: #6366f1;
+  color: white;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+}
+
+/* Hover Effect */
+.add-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.35);
+  background-color: white;
+  color:black;
+  border: #6366f1 1px solid;
+}
+
+/* Active Click */
+.add-button:active {
+  transform: translateY(0px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+}
+
+/* Icon Styling */
+.btn-icon {
+  display: flex;
 }

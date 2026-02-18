@@ -8,6 +8,6 @@ export const showToast = (message, type = "success") => {
             background: type === "success" ? "#4caf50" : "#f44336",
             color: "#fff",
         },
-        icon: type === "success" ? "✅" :type === "warning"?"ℹ️" :type === "error"?"❌":"",
+        icon: type === "success" ? "✅" :type === "warning"?"ℹ️" :type === "error"?"🚫":"",
     });
 };

@@ -104,25 +104,6 @@
   align-items: center;
   justify-content: center;
 }
-
-/* Logout */
-.logout-btn {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 16px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-weight: 500;
-  color: #dc2626;
-  transition: 0.3s ease;
-}
-
-.logout-btn:hover {
-  background: rgba(220, 38, 38, 0.1);
-}
-
 /* ===== Responsive ===== */
 
 @media (max-width: 768px) {

@@ -3,13 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { motion } from "framer-motion";
 import { LogOut, User, Menu } from "lucide-react";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const TopNavbar = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [isLoged,setisLoged] = useState(false);
+  const [isLoged, setisLoged] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -17,7 +17,7 @@ const TopNavbar = () => {
   };
   useEffect(() => {
     setisLoged(localStorage.getItem("token") ? true : false);
-  }, []);
+  });
 
 
   return (
@@ -31,7 +31,8 @@ const TopNavbar = () => {
 
         {/* Logo */}
         <Link to="/" className="topnav-logo">
-          InventoryMS
+          <img src="/src/utils/logo.png" alt="IMS Logo" className="ims-logo-img" />
+          {/* <span className="logo-text">Inventory<span>MS</span></span> */}
         </Link>
 
         {/* Desktop Links */}
@@ -48,7 +49,7 @@ const TopNavbar = () => {
                 <span>{user?.username}</span>
               </div>
 
-              <button onClick={handleLogout} className="nav-button">
+              <button onClick={handleLogout} title="Logout" className="logout-btn">
                 <LogOut size={16} />
                 Logout
               </button>
@@ -77,7 +78,10 @@ const TopNavbar = () => {
           ) : (
             <>
               <span className="mobile-user">{user?.username}</span>
-              <button onClick={handleLogout}>Logout</button>
+              <button onClick={handleLogout} className="logout-btn">
+                <LogOut size={16} />
+                Logout
+              </button>
             </>
           )}
         </div>

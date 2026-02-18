@@ -30,13 +30,12 @@ const Login = () => {
     e.preventDefault();
     showLoader();
     let validationData = [
-      { name: "Email", value: formData.email, type: "email", id: "email" },
-      { name: "Password", value: formData.password, type: "password", id: "password" }
+      { name: "Email", value: formData.email, required: true, type: "email", id: "email" },
+      { name: "Password", value: formData.password, required: true, type: "password", id: "password" }
     ];
     try {
       let validResponse = validate(validationData);
       if (!validResponse.isValid) {
-        hideLoader();
         showToast(validResponse.message, "error");
         return;
       }

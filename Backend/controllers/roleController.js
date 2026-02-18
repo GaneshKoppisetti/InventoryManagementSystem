@@ -2,8 +2,8 @@ const Role = require('../models/role');
 
 const createRole = async (req, res) => {
   try {
-    const { name, description, permissions,isActive } = req.body;
-    const newRole = new Role({ name, description, permissions, isActive });
+    const { rolename, description, permissions, isActive } = req.body;
+    const newRole = new Role({ rolename, description, permissions, isActive });
     await newRole.save();
     res.status(201).json(newRole);
   } catch (error) {
@@ -14,7 +14,7 @@ const createRole = async (req, res) => {
 
 const getRoles = async (req, res) => {
   try {
-    const roles = await Role.find().populate('permissions');
+    const roles = await Role.find();
     res.status(200).json(roles);
   } catch (error) {
     console.error('Error fetching roles:', error);
@@ -25,10 +25,10 @@ const getRoles = async (req, res) => {
 const updateRole = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, description, permissions, isActive } = req.body;
+    const { rolename,description, permissions, isActive } = req.body;
     const updatedRole = await Role.findByIdAndUpdate(
       id,
-      { name, description, permissions, isActive },
+      { rolename, description, permissions, isActive },
       { new: true }
     );
     if (!updatedRole) {
@@ -44,7 +44,7 @@ const updateRole = async (req, res) => {
 const deleteRole = async (req, res) => {
   try {
     const { id } = req.params;
-    const deletedRole = await Role.findByIdAndUpdate(id, { isActive: false });
+    const deletedRole = await Role.findByIdAndDelete(id);
     if (!deletedRole) {
       return res.status(404).json({ error: 'Role not found' });
     }
@@ -54,10 +54,24 @@ const deleteRole = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+const getRoleById = async (req, res) => {
+  try {
+    const { id } = req.params;  
+    const role = await Role.findById(id);
+    if (!role) {
+      return res.status(404).json({ error: 'Role not found' });
+    } 
+    res.status(200).json(role);
+  } catch (error) {
+    console.error('Error fetching role:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
 
 module.exports = {
   createRole,
   getRoles,
   updateRole,
-  deleteRole
+  deleteRole,
+  getRoleById
 };
