@@ -8,7 +8,7 @@ import "./Datatable.css";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-const DataTable = ({ rowData = [], columnDefs = [], height = "500px", pagination = true, pageSize = 10, pageSizeOptions = [10, 20, 50, 100],onAdd=()=>{}}) => {
+const DataTable = ({ rowData = [], columnDefs = [], height = "500px", pagination = true, pageSize = 10, pageSizeOptions = [10, 20, 50, 100],showNew=false,onAdd=()=>{}}) => {
   const [quickFilterText, setQuickFilterText] = useState("");
 
   const defaultColDef = useMemo(() => ({
@@ -32,14 +32,14 @@ const DataTable = ({ rowData = [], columnDefs = [], height = "500px", pagination
   return (
     <div className="view-container">
       <div className="add-button-container">
-        <button
+        {showNew && <button
           type="button"
           className="add-button"
           onClick={() => onAdd()}
         >
           <Plus size={18} className="btn-icon" />
           <span>New</span>
-        </button>
+        </button>}
       </div>
       <div className="custom-grid-wrapper">
 

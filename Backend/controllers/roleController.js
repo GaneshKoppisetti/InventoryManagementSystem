@@ -3,6 +3,9 @@ const Role = require('../models/role');
 const createRole = async (req, res) => {
   try {
     const { rolename, description, permissions, isActive } = req.body;
+    if (await Role.findOne({ rolename })) {
+      return res.status(400).json({ error: 'Role Name already exists' });
+    }
     const newRole = new Role({ rolename, description, permissions, isActive });
     await newRole.save();
     res.status(201).json(newRole);
@@ -25,7 +28,7 @@ const getRoles = async (req, res) => {
 const updateRole = async (req, res) => {
   try {
     const { id } = req.params;
-    const { rolename,description, permissions, isActive } = req.body;
+    const { rolename, description, permissions, isActive } = req.body;
     const updatedRole = await Role.findByIdAndUpdate(
       id,
       { rolename, description, permissions, isActive },
@@ -56,11 +59,11 @@ const deleteRole = async (req, res) => {
 };
 const getRoleById = async (req, res) => {
   try {
-    const { id } = req.params;  
+    const { id } = req.params;
     const role = await Role.findById(id);
     if (!role) {
       return res.status(404).json({ error: 'Role not found' });
-    } 
+    }
     res.status(200).json(role);
   } catch (error) {
     console.error('Error fetching role:', error);

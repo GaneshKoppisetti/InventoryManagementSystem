@@ -1,22 +1,39 @@
 import "./TopNavbar.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
 import { motion } from "framer-motion";
 import { LogOut, User, Menu } from "lucide-react";
 import { useState, useEffect } from "react";
-
+import { showLoader, hideLoader } from "../../utils/loader/Loader";
+import { showToast } from "../../utils/toaster/Toaster";
+import api from "../../services/api";
+import { useAuth } from "../../context/useContext";
 const TopNavbar = () => {
-  const { user, logout } = useAuth();
+  const { user ,logout} = useAuth();
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isLoged, setisLoged] = useState(false);
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
+  const handleLogOut = async () => {
+    try {
+      showLoader();
+      const resp = await api.post('users/logOutUser',{});
+      showToast(resp.data.message, "success");
+      setisLoged(false);
+      logout();
+      setTimeout(() => navigate("/login"), 2000);
+    } catch (err) {
+      console.error("Login error:", err);
+      const message =
+        err.response?.data?.message ||
+        "Something went wrong. Please try again.";
+
+      showToast(message, "error");
+    } finally {
+      hideLoader();
+    }
   };
   useEffect(() => {
-    setisLoged(localStorage.getItem("token") ? true : false);
+    setisLoged(user ? true : false);
   });
 
 
@@ -44,12 +61,29 @@ const TopNavbar = () => {
             </>
           ) : (
             <>
-              <div className="nav-user">
-                <User size={18} />
-                <span>{user?.username}</span>
+              <div className="nav-user-wrapper">
+                <div className="nav-user-trigger" title="View Profile">
+                  <User size={18} />
+                  <span className="nav-username">{user?.username}</span>
+                </div>
+
+                <div className="nav-user-dropdown">
+                  <div className="dropdown-item">
+                    <span className="label">Email : </span>
+                    <span className="value">{user?.email}</span>
+                  </div>
+
+                  <div className="dropdown-item">
+                    <span className="label">Role : </span>
+                    <span className="value">
+                      {user?.role || user?.roles?.[0]}
+                    </span>
+                  </div>
+                </div>
               </div>
 
-              <button onClick={handleLogout} title="Logout" className="logout-btn">
+
+              <button onClick={handleLogOut} title="Logout" className="logout-btn">
                 <LogOut size={16} />
                 Logout
               </button>
@@ -78,7 +112,7 @@ const TopNavbar = () => {
           ) : (
             <>
               <span className="mobile-user">{user?.username}</span>
-              <button onClick={handleLogout} className="logout-btn">
+              <button onClick={handleLogOut} className="logout-btn">
                 <LogOut size={16} />
                 Logout
               </button>

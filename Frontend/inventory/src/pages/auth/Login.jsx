@@ -1,13 +1,12 @@
 import "./Login.css";
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { useNavigate, Link } from "react-router-dom";
 import { Mail, Lock } from "lucide-react";
 import validate from "../../utils/validation/validator";
 import { showLoader, hideLoader } from "../../utils/loader/Loader";
 import { showToast } from "../../utils/toaster/Toaster";
 import api from "../../services/api";
-import {useAuth} from "../../context/AuthContext";
+import {useAuth} from "../../context/useContext";
 
 
 const Login = () => {

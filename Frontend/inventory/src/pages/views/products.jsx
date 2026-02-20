@@ -6,18 +6,23 @@ const DataTable = lazy(() => import("../../utils/Datatable"));
 import { showLoader, hideLoader } from "../../utils/loader/Loader";
 import { showToast } from "../../utils/toaster/Toaster";
 import api from "../../services/api";
+import { useAuth } from "../../context/useContext";
 
 
 const Products = () => {
   const [products, setProducts] = useState([]);
+  const { user } = useAuth();
+  const permissions = user?.permissions?.[0]?.permissions;
+  const navigate = useNavigate();
+
   const columnDefs = [
     {
       headerName: "Product Name",
       field: "productname",
     },
     {
-      headerName:"SKU",
-      field:"sku"
+      headerName: "SKU",
+      field: "sku"
     },
     {
       headerName: "Description",
@@ -48,11 +53,11 @@ const Products = () => {
       cellRenderer: (params) => (
         <div style={{ color: params.data.isActive ? "green" : "#f53a3a", fontWeight: "bold" }}>
           <span>
-            {params.data.isActive ? <CircleCheckIcon size={18}/> : <CircleX size={18}/>}
+            {params.data.isActive ? <CircleCheckIcon size={18} /> : <CircleX size={18} />}
           </span>
           <span className="status-icon-text">{params.data.isActive ? "Active" : "In-Active"}
           </span>
-          </div>
+        </div>
       ),
     },
     {
@@ -65,28 +70,31 @@ const Products = () => {
       width: 140,
       cellRenderer: (params) => (
         <div style={{ display: "flex", gap: "8px" }}>
-          <button
-          type="button"
-          title="Edit"
+          {(permissions?.Products?.includes("Write") || permissions?.Products?.includes("Update")) && <button
+            type="button"
+            title="Edit"
             onClick={() => handleEdit(params.data)}
             className="edit-btn"
           >
             <Edit size={16} />
-          </button>
+          </button>}
 
-          <button
-          type="button"
-          title="Delete"
+          {(permissions?.Products?.includes("Delete")) && <button
+            type="button"
+            title="Delete"
             onClick={() => handleDelete(params.data._id)}
             className="delete-btn"
           >
             <Trash size={16} />
-          </button>
+          </button>}
         </div>
       ),
     },
   ];
-  const navigate = useNavigate();
+  // RBAC based on permissions
+  if (!(permissions?.Products?.includes("Write") || permissions?.Products?.includes("Update") || permissions?.Products?.includes("Delete"))) {
+    columnDefs.pop();
+  }
 
 
   useEffect(() => {
@@ -99,23 +107,23 @@ const Products = () => {
         setProducts(response.data);
       } catch (error) {
         console.error("Error fetching products data:", error);
-         const errorMessage = error.response?.data?.message || "Something went wrong. Please try again.";
+        const errorMessage = error.response?.data?.message || "Something went wrong. Please try again.";
         showToast(errorMessage, "error");
 
-      } finally { 
+      } finally {
         hideLoader();
       }
     };
     fetchData();
   }, []);
-   const handleAdd = () => {
+  const handleAdd = () => {
     navigate("/product-form");
   };
   const handleEdit = (data) => {
     navigate(`/product-form/${data._id}`);
   };
 
-  const handleDelete = async (id) => {  
+  const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
         showLoader();
@@ -139,6 +147,7 @@ const Products = () => {
       <DataTable
         rowData={products}
         columnDefs={columnDefs}
+        showNew={permissions?.Products?.includes("Write")}
         onAdd={handleAdd}
       />
     </div>

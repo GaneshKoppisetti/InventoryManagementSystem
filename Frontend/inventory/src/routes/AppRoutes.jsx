@@ -3,8 +3,12 @@ import { lazy, Suspense } from "react";
 import RouteLoader from "../utils/loader/routeLoader";
 
 const Dashboard = lazy(() => import("../pages/dashboard/Dashboard"));
+// Authentication
+import { useAuth } from "../context/useContext";
 const Login = lazy(() => import("../pages/auth/Login"));
 const Signup = lazy(() => import("../pages/auth/Signup"));
+const Unauthorized = lazy(() => import("../pages/auth/unauthorized"));
+const PageNotFound = lazy(() => import("../pages/auth/pagenotfound"));
 const RootLayout = lazy(() => new Promise((resolve) => setTimeout(() => resolve(import("../components/layout/Rootlayout")), 2000)));
 const MainLayout = lazy(() => import("../components/layout/Mainlayout"));
 // Views
@@ -16,9 +20,16 @@ const RoleForm = lazy(() => import("../pages/forms/roleForm"));
 const UserForm = lazy(() => import("../pages/forms/userForm"));
 const ProductForm = lazy(() => import("../pages/forms/productForm"));
 
-const ProtectedRoute = ({ children }) => {
-  const { token } = localStorage;
-  return token ? children : <Navigate to="/login" />;
+const ProtectedRoute = ({ allowedRoles, children }) => {
+  const { user } = useAuth();
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+  if (!allowedRoles.includes(user?.roles[0])) {
+    return <Navigate to="/unauthorized" />;
+  }
+
+  return children;
 };
 
 const AppRoutes = () => {
@@ -37,24 +48,35 @@ const AppRoutes = () => {
           <Route
             path="/"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute allowedRoles={["Admin", "Staff", "Manager"]}>
                 <MainLayout />
               </ProtectedRoute>
             }
           >
-            <Route index element={<Dashboard />} />
+            <Route path="/" element={<ProtectedRoute allowedRoles={["Admin", "Manager", "Staff"]}>
+              <Dashboard /> </ProtectedRoute>} />
+            <Route path="/dashboard" element={<ProtectedRoute allowedRoles={["Admin", "Manager", "Staff"]}>
+              <Dashboard /> </ProtectedRoute>} />
             {/* Views */}
-            <Route path="/roles" element={<Roles />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="/products" element={<Products />} />
+            <Route path="/roles" element={<ProtectedRoute allowedRoles={["Admin"]}>
+              <Roles /> </ProtectedRoute>} />
+            <Route path="/users" element={<ProtectedRoute allowedRoles={["Admin"]}>
+              <Users /> </ProtectedRoute>} />
+            <Route path="/products" element={<ProtectedRoute allowedRoles={["Admin", "Manager", "Staff"]}>
+              <Products /> </ProtectedRoute>} />
             {/* Forms */}
-            <Route path="/role-form/:id?" element={<RoleForm />} />
-            <Route path="/user-form/:id?" element={<UserForm />} />
-            <Route path="/product-form/:id?" element={<ProductForm />} />
+            <Route path="/role-form/:id?" element={<ProtectedRoute allowedRoles={["Admin"]}>
+              <RoleForm /> </ProtectedRoute>} />
+            <Route path="/user-form/:id?" element={<ProtectedRoute allowedRoles={["Admin"]}>
+              <UserForm /> </ProtectedRoute>} />
+            <Route path="/product-form/:id?" element={<ProtectedRoute allowedRoles={["Admin", "Manager"]}>
+              <ProductForm /> </ProtectedRoute>} />
           </Route>
 
         </Route>
 
+        <Route path="/unauthorized" element={<Unauthorized />}></Route>
+        <Route path="*" element={<PageNotFound />}></Route>
       </Routes>
     </Suspense>
   );

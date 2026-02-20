@@ -6,10 +6,16 @@ const DataTable = lazy(() => import("../../utils/Datatable"));
 import { showLoader, hideLoader } from "../../utils/loader/Loader";
 import { showToast } from "../../utils/toaster/Toaster";
 import api from "../../services/api";
+import { useAuth } from "../../context/useContext";
+
 
 
 const Roles = () => {
   const [roles, setRoles] = useState([]);
+  const { user } = useAuth();
+  const permissions = user?.permissions?.[0]?.permissions;
+  const navigate = useNavigate();
+
   const columnDefs = [
     {
       headerName: "Role Name",
@@ -81,29 +87,32 @@ const Roles = () => {
       width: 140,
       cellRenderer: (params) => (
         <div style={{ display: "flex", gap: "8px" }}>
-          <button
-          type="button"
-          title="Edit"
+          {(permissions?.Roles?.includes("Write") || permissions?.Roles?.includes("Update")) && <button
+            type="button"
+            title="Edit"
             onClick={() => handleEdit(params.data)}
             className="edit-btn"
           >
             <Edit size={16} />
-          </button>
+          </button>}
 
-          <button
-          type="button"
-          title="Delete"
+          {(permissions?.Roles?.includes("Delete")) && <button
+            type="button"
+            title="Delete"
             onClick={() => handleDelete(params.data._id)}
             className="delete-btn"
           >
             <Trash size={16} />
-          </button>
+          </button>}
         </div>
       ),
     },
   ];
-  const navigate = useNavigate();
 
+  // RBAC based on permissions
+  if (!(permissions?.Roles?.includes("Write") || permissions?.Roles?.includes("Update") || permissions?.Roles?.includes("Delete"))) {
+    columnDefs.pop();
+  }
 
   useEffect(() => {
     showLoader();
@@ -130,7 +139,7 @@ const Roles = () => {
     navigate(`/role-form/${data._id}`);
   };
 
-  const handleDelete = async (id) => {  
+  const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this role?")) {
       try {
         showLoader();
@@ -154,6 +163,7 @@ const Roles = () => {
       <DataTable
         rowData={roles}
         columnDefs={columnDefs}
+        showNew={permissions?.Roles?.includes("Write")}
         onAdd={() => handleAdd()}
       />
     </div>

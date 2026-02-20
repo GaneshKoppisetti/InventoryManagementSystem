@@ -1,45 +1,59 @@
 import "./Sidebar.css";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
-import {LayoutDashboard,Users,Package,ChevronLeft,ChevronRight,Settings} from "lucide-react";
-import { useAuth } from "../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
-
+import { NavLink, useLocation } from "react-router-dom";
+import {
+  LayoutDashboard,
+  Users,
+  Package,
+  ChevronLeft,
+  ChevronRight,
+  Settings
+} from "lucide-react";
+import { useAuth } from "../../context/useContext";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const navigate = useNavigate();
+  const { user } = useAuth();
+  const location = useLocation();
+
+  const role = user?.permissions?.[0]?.role;
 
   const menuItems = [
     {
       name: "Dashboard",
       icon: <LayoutDashboard size={20} />,
-      path: "/"
+      path: "/",
+      roles: ["Admin", "Manager", "Staff"]
     },
     {
       name: "Roles",
       icon: <Settings size={20} />,
-      path: "/roles"
+      path: "/roles",
+      roles: ["Admin"]
     },
     {
       name: "Users",
       icon: <Users size={20} />,
-      path: "/users"
+      path: "/users",
+      roles: ["Admin"]
     },
     {
       name: "Products",
       icon: <Package size={20} />,
-      path: "/products"
+      path: "/products",
+      roles: ["Admin", "Manager", "Staff"]
     }
   ];
 
+  const filteredMenu = menuItems.filter(item =>
+    item.roles.includes(role)
+  );
+
   return (
     <div className={`sidebar-content ${isOpen ? "expanded" : "collapsed"}`}>
+      
       {/* Toggle */}
       <div className="sidebar-header">
-        {/* <span className="sidebar-title">
-          {isOpen ? "InventoryMS" : "IM"}
-        </span> */}
         <button
           className="toggle-btn"
           onClick={() => setIsOpen(!isOpen)}
@@ -50,18 +64,25 @@ const Sidebar = () => {
 
       {/* Menu */}
       <nav className="sidebar-menu">
-        {menuItems.map((item) => (
-          <NavLink
-            key={item.name}
-            to={item.path}
-            className={({ isActive }) =>
-              `menu-item ${isActive ? "active" : ""}`
-            }
-          >
-            <span className="menu-icon">{item.icon}</span>
-            {isOpen && <span>{item.name}</span>}
-          </NavLink>
-        ))}
+        {filteredMenu.map((item) => {
+
+          // ✅ Proper Active Logic
+          const isActive =
+            item.path === "/"
+              ? (location.pathname === "/" || location.pathname.startsWith("/dashboard"))
+              : location.pathname.startsWith(item.path);
+
+          return (
+            <NavLink
+              key={item.name}
+              to={item.path}
+              className={`menu-item ${isActive ? "active" : ""}`}
+            >
+              <span className="menu-icon">{item.icon}</span>
+              {isOpen && <span>{item.name}</span>}
+            </NavLink>
+          );
+        })}
       </nav>
     </div>
   );
