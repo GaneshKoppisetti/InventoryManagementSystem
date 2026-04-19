@@ -12,7 +12,7 @@ const createUser = async (req, res) => {
     }
 
     if (!role) {
-      const defaultRole = await Role.findOne({ name: "staff" }).select('_id');
+      const defaultRole = await Role.findOne({ name: "Staff" }).select('_id');
       role = defaultRole?._id;
     }
 
