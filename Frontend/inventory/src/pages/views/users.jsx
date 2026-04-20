@@ -64,7 +64,7 @@ const Users = () => {
       width: 140,
       cellRenderer: (params) => (
         <div style={{ display: "flex", gap: "8px" }}>
-          {(permissions?.Users?.includes("Write") || permissions?.Users?.includes("Update")) && <button
+          {(permissions?.Users?.includes("Update")) && <button
             type="button"
             title="Edit"
             onClick={() => handleEdit(params.data)}

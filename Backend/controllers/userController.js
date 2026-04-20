@@ -131,7 +131,7 @@ const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email,isActive:true }).populate("role");
+    const user = await User.findOne({ email, isActive: true }).populate("role");
     //console.log(user);
     if (!user) return res.status(404).json({ message: "User not found" });
 
@@ -227,7 +227,7 @@ const refreshAccessToken = async (req, res) => {
         permissions
       },
       process.env.JWT_SECRET,
-      { expiresIn: "15m" }
+      { expiresIn: "5m" }
     );
 
     res.status(200).json({ accessToken: newAccessToken });
@@ -245,7 +245,7 @@ const logoutUser = async (req, res) => {
     { refreshToken },
     { refreshToken: null }
   );
-
+  sessionStorage.clear();
   res.clearCookie("refreshToken");
 
   res.status(200).json({ message: "Logged out successfully" });

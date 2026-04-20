@@ -70,7 +70,7 @@ const Products = () => {
       width: 140,
       cellRenderer: (params) => (
         <div style={{ display: "flex", gap: "8px" }}>
-          {(permissions?.Products?.includes("Write") || permissions?.Products?.includes("Update")) && <button
+          {(permissions?.Products?.includes("Update")) && <button
             type="button"
             title="Edit"
             onClick={() => handleEdit(params.data)}

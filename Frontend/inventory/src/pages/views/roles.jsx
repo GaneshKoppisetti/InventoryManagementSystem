@@ -87,7 +87,7 @@ const Roles = () => {
       width: 140,
       cellRenderer: (params) => (
         <div style={{ display: "flex", gap: "8px" }}>
-          {(permissions?.Roles?.includes("Write") || permissions?.Roles?.includes("Update")) && <button
+          {(permissions?.Roles?.includes("Update")) && <button
             type="button"
             title="Edit"
             onClick={() => handleEdit(params.data)}
