@@ -34,12 +34,12 @@ const Users = () => {
     {
       headerName: "Created At",
       field: "createdAt",
-      valueGetter: (params) => format(new Date(params.data.createdAt), "dd-MM-yyyy hh:mm a"),
+      valueGetter: (params) => params.data.createdAt?format(new Date(params.data.createdAt), "dd-MM-yyyy hh:mm a"):'',
     },
     {
       headerName: "Updated At",
       field: "updatedAt",
-      valueGetter: (params) => format(new Date(params.data.updatedAt), "dd-MM-yyyy hh:mm a"),
+      valueGetter: (params) => params.data.updatedAt?format(new Date(params.data.updatedAt), "dd-MM-yyyy hh:mm a"):'',
     },
     {
       headerName: "Status",
