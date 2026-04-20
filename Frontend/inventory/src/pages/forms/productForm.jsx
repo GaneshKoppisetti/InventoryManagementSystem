@@ -51,7 +51,7 @@ const ProductForm = () => {
         } catch (err) {
             console.error("Error fetching product data:", err);
             const errorMessage =
-                err.response?.data?.error ||
+                err.response?.data?.error || err.response?.data?.message ||
                 "Something went wrong. Please try again.";
             showToast(errorMessage, "error");
         } finally {
@@ -87,7 +87,7 @@ const ProductForm = () => {
         } catch (err) {
             console.error("Error submitting/Updating product form:", err);
             const errorMessage =
-                err.response?.data?.error ||
+                err.response?.data?.error || err.response?.data?.message ||
                 "Something went wrong. Please try again.";
             showToast(errorMessage, "error");
         } finally {

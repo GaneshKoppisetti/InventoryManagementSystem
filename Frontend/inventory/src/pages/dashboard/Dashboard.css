@@ -17,12 +17,14 @@
 
 .stat-card {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 20px;
   padding: 25px;
+  margin:25px;
   border-radius: 18px;
   background: white;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  box-shadow:5px 5px 5px #8cc5f7;
   transition: 0.3s ease;
   cursor: pointer;
 }

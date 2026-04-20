@@ -66,7 +66,7 @@ const UserForm = () => {
         } catch (err) {
             console.error("Error fetching user data:", err);
             const errorMessage =
-                err.response?.data?.error ||
+                err.response?.data?.error || err.response?.data?.message ||
                 "Something went wrong. Please try again.";
             showToast(errorMessage, "error");
         } finally {
@@ -102,7 +102,7 @@ const UserForm = () => {
         } catch (err) {
             console.error("Error submitting/Updating user form:", err);
             const errorMessage =
-                err.response?.data?.error ||
+                err.response?.data?.error || err.response?.data?.message ||
                 "Something went wrong. Please try again.";
             showToast(errorMessage, "error");
         } finally {

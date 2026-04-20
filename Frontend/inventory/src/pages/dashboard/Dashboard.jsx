@@ -8,7 +8,7 @@ import api from "../../services/api";
 const Dashboard = () => {
   const [products, setProducts] = useState([]);
 
-   useEffect(() => {
+  useEffect(() => {
     showLoader();
     // Fetch products data
     const fetchData = async () => {
@@ -31,7 +31,7 @@ const Dashboard = () => {
   const totalProducts = products.length;
   const activeProducts = products.filter(p => p.isActive).length;
   const lowStock = products.filter(p => p.quantity < 50).length;
-  const totalQuantity = products.reduce((sum, p) => sum +p.quantity, 0);
+  const totalQuantity = products.reduce((sum, p) => sum + p.quantity, 0);
 
   const stats = [
     {
@@ -65,21 +65,32 @@ const Dashboard = () => {
       <h2 className="dashboard-title"> Overview Of Products</h2>
 
       <div className="stats-grid">
-        {stats.map((stat, index) => (
-          <motion.div
-            key={stat.title}
-            className={`stat-card ${stat.color}`}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-            whileHover={{ y: -6 }}
-          >
-            <div className="stat-icon">{stat.icon}</div>
-            <div>
-              <p className="stat-title">{stat.title}</p>
-              <h3 className="stat-value">{stat.value}</h3>
-            </div>
-          </motion.div>
+        {stats.reduce((rows, stat, index) => {
+          if (index % 2 === 0) {
+            rows.push([stat]);
+          } else {
+            rows[rows.length - 1].push(stat);
+          }
+          return rows;
+        }, []).map((row, rowIndex) => (
+          <div className="stats-row" key={rowIndex}>
+            {row.map((stat, index) => (
+              <motion.div
+                key={stat.title}
+                className={`stat-card ${stat.color}`}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ y: -6 }}
+              >
+                <div className="stat-icon">{stat.icon}</div>
+                <div>
+                  <p className="stat-title">{stat.title}</p>
+                  <h3 className="stat-value">{stat.value}</h3>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         ))}
       </div>
     </div>

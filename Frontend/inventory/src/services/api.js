@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {showToast} from "../utils/toaster/Toaster";
+import { navigateTo } from "./navigation";
 
 const API_BASE_URL = 'http://localhost:4000/api';
 
@@ -52,7 +53,8 @@ api.interceptors.response.use(
         console.log("Error while refresh the access token",error);
         sessionStorage.clear();
         showToast("Session has expired. Please Re-login","error")
-        window.location.href="/login";
+        // window.location.href="/login";
+        navigateTo("/login");
       }
     }
 

@@ -75,7 +75,7 @@ const RoleForm = () => {
     } catch (err) {
       console.error("Error fetching role data:", err);
       const errorMessage =
-        err.response?.data?.error ||
+        err.response?.data?.error || err.response?.data?.message ||
         "Something went wrong. Please try again.";
       showToast(errorMessage, "error");
     } finally {
@@ -108,7 +108,7 @@ const RoleForm = () => {
     } catch (err) {
       console.error("Error submitting/Updating role form:", err);
       const errorMessage =
-        err.response?.data?.error ||
+        err.response?.data?.error || err.response?.data?.message ||
         "Something went wrong. Please try again.";
       showToast(errorMessage, "error");
     } finally {

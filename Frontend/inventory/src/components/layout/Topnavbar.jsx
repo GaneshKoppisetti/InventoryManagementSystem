@@ -47,7 +47,7 @@ const TopNavbar = () => {
       <div className="topnav-inner">
 
         {/* Logo */}
-        <Link to="/" className="topnav-logo">
+        <Link to="/" className="topnav-logo" title="Inventory Management System">
           <img src="/src/utils/logo.png" alt="IMS Logo" className="ims-logo-img" />
           {/* <span className="logo-text">Inventory<span>MS</span></span> */}
         </Link>

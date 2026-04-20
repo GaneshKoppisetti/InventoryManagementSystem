@@ -4,9 +4,11 @@ import AppRoutes from "./routes/AppRoutes";
 import { Toaster } from "react-hot-toast";
 import "./utils/globalstyles.css";
 import Loader from "./utils/loader/Loader";
-function App() {
+import NavigationHandler from "./services/navigationHolder";
+const  App = () =>{
   return (
     <BrowserRouter>
+    <NavigationHandler/>
       <AuthProvider>
         <AppRoutes />
       </AuthProvider>
